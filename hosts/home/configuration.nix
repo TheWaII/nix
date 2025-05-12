@@ -1,0 +1,3 @@
+{
+  description = "Nixos config flake";
+}
