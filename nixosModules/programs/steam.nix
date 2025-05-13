@@ -1,7 +1,8 @@
-{pkgs, ...}:
+{ pkgs, lib, config, ... }: {
 
-{
-  environment.systemPackages = with pkgs; [
-    steam
-  ];
+  options = { steam.enable = lib.mkEnableOption "enables steam"; };
+
+  config = lib.mkIf config.steam.enable {
+    environment.systemPackages = [ pkgs.steam ];
+  };
 }

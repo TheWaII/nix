@@ -1,7 +1,8 @@
-{pkgs, ...}:
+{ pkgs, lib, config, ... }: {
 
-{
-  environment.systemPackages = with pkgs; [
-    spotify
-  ];
+  options = { spotify.enable = lib.mkEnableOption "enables spotify"; };
+
+  config = lib.mkIf config.spotify.enable {
+    environment.systemPackages = with pkgs; [ spotify ];
+  };
 }

@@ -3,8 +3,16 @@
 {
   imports = [ ./hardware-configuration.nix ../../nixosModules/default.nix ];
 
-  features.programs.discord.enable = true; # Enable Discord
-  features.services.immich.enable = true; # Enable Immich
+  #programs
+  brave.enable = true;
+  spotify.enable = true;
+  qbittorrent.enable = true;
+  vscode.enable = true;
+
+  #services
+  immich.enable = true;
+  jellyfin.enable = true;
+  mdadm.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -39,7 +47,6 @@
   };
 
   # Enable the X11 windowing system.
-  services.jellyfin.enable = true;
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
@@ -79,17 +86,10 @@
     isNormalUser = true;
     description = "servewall";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs;
-      [
-        #  thunderbird
-      ];
   };
 
   #enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Install firefox.
-  programs.firefox.enable = false;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -97,24 +97,12 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    bazarr
-    brave
     cpuid
-    git
-    homepage-dashboard
-    jellyfin
     lf
     lm_sensors
     nixd
     nixfmt
-    paperless-ngx
-    radarr
-    sonarr
-    spotify
-    sublime
-    uptime-kuma
     util-linux
-    vscode
   ];
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
