@@ -1,21 +1,16 @@
 {
   description = "Nixos config flake";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  };
+  inputs = { nixpkgs = { url = "nixpkgs/nixos-unstable"; }; };
 
-  outputs = { self, nixpkgs, ...}@inputs: 
-    let 
-     system = "x86_64-linux";
-     pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        extraSpecialArgs = {inherit inputs;};
-        modules = [
-          ./hosts/default/configration.nix
-        ];
+  outputs = { self, nixpkgs, ... }:
+    let lib = nixpkgs.lib;
+    in {
+      nixosConfigurations = {
+        servewall = lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./hosts/server/configuration.nix ];
+        };
       };
     };
 }
