@@ -13,7 +13,7 @@
   #services
   immich.enable = true;
   jellyfin.enable = true;
-  mdadm.enable = false;
+  # mdadm.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

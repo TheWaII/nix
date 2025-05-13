@@ -15,12 +15,11 @@
     ./services/homepage-dashboard.nix
     ./services/immich.nix
     ./services/jellyfin.nix
-    ./services/mdadm.nix
+    # ./services/mdadm.nix
     ./services/paperless-ngx.nix
     ./services/radarr.nix
     ./services/sonarr.nix
     ./services/uptime-kuma.nix
-
   ];
 
   #programs
