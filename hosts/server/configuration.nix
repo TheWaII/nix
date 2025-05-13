@@ -5,6 +5,7 @@
 
   #programs
   brave.enable = true;
+  discord.enable = true;
   spotify.enable = true;
   qbittorrent.enable = true;
   vscode.enable = true;
@@ -12,7 +13,7 @@
   #services
   immich.enable = true;
   jellyfin.enable = true;
-  mdadm.enable = true;
+  mdadm.enable = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
