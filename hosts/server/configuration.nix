@@ -6,20 +6,21 @@
   #programs
   brave.enable = true;
   discord.enable = true;
+  signal-desktop.enable = true;
   spotify.enable = true;
   qbittorrent.enable = true;
   vscode.enable = true;
 
-  #services
+  # services.homepage-dashboard.enable = true;
   immich.enable = true;
   jellyfin.enable = true;
-  # mdadm.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "servewall"; # Define your hostname.
+  networking.hostId = "e87e83fe"; # head -c 8 /etc/machine-id
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -79,24 +80,22 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.servewall = {
     isNormalUser = true;
     description = "servewall";
-    extraGroups = [ "networkmanager" "wheel" ];
+    group = "servewall";
+    extraGroups = [ "users" "networkmanager" "wheel" ];
   };
 
+  users.groups.servewall = { };
+  
   #enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     cpuid
     lf
@@ -104,7 +103,25 @@
     nixd
     nixfmt
     util-linux
+    zfs
   ];
+
+  #START ZFS
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.initrd.supportedFilesystems = [ "zfs" ];
+  boot.zfs.extraPools = [ "zstorage" "zmedia" ];
+
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+  };
+  #END ZFS
+
+services.avahi = {
+	enable = false;
+};
+
+
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
@@ -112,7 +129,7 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
+  # programs.gnupg.agent = {<
   #   enable = true;
   #   enableSSHSupport = true;
   # };
