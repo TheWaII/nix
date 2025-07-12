@@ -134,6 +134,11 @@
       vpl-gpu-rt              # RECOMMENDED: Modern Intel Video Processing Library
     ];
   };
+  
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

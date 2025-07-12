@@ -16,6 +16,7 @@
     ./services/arr/radarr.nix
     ./services/arr/sonarr.nix
     ./services/git.nix
+    ./services/nginx.nix
     # ./services/homepage-dashboard.nix
     #./services/immich.nix
     ./services/jellyfin.nix
@@ -43,5 +44,6 @@
 
   #the rest
   jellyfin.enable = lib.mkDefault true;
+  nginx.enable = lib.mkDefault true;
   
 }
