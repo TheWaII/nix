@@ -45,8 +45,8 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -78,15 +78,9 @@
   users.users.servewall = {
     isNormalUser = true;
     description = "servewall";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
+    extraGroups = [ "networkmanager" "wheel" "render" "video" ];
   };
 
-  #programs
-  brave.enable = true;
-  vscode.enable = true;
 
   #services
   git = {
@@ -94,7 +88,6 @@
     username = "thewall";
     email = "23299221+TheWaII@users.noreply.github.com"; 
   };
-  jellyfin.enable = true;
 
 
   # Allow unfree packages
@@ -103,6 +96,14 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    cpuid
+    lf
+    lm_sensors
+    mission-center
+    nixd
+    nixfmt-classic
+    pciutils
+    util-linux
     zfs
   ];
 
@@ -119,6 +120,20 @@
     interval = "monthly";
   };
   #END ZFS
+
+  #GPU Drivers
+  systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD"; # Or "i965" if using older driver
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };      # Same here
+  
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver      # ESSENTIAL: Primary VAAPI driver for Arc (iHD)
+      intel-compute-runtime   # ESSENTIAL: OpenCL runtime, likely needed for HDR tone mapping
+      libva                   # ESSENTIAL: Core VAAPI library
+      vpl-gpu-rt              # RECOMMENDED: Modern Intel Video Processing Library
+    ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
