@@ -57,5 +57,6 @@
       acceptTerms = true;
       defaults.email = "23299221+TheWaII@users.noreply.github.com";
     };
+    networking.firewall.allowedTCPPorts = [80 443];
   };
 }

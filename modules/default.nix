@@ -22,6 +22,7 @@
     #./services/immich.nix
     ./services/jellyfin.nix
     #./services/paperless-ngx.nix
+    ./services/openssh.nix
     #./services/uptime-kuma.nix
 
   ];
@@ -46,6 +47,7 @@
   #the rest
   jellyfin.enable = lib.mkDefault true;
   nginx.enable = lib.mkDefault true;
+  openssh.enable = lib.mkDefault true;
   proton.enable = lib.mkDefault true;
   qbittorrent.enable = lib.mkDefault true;
   

@@ -15,6 +15,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  programs.nix-ld.enable = true; #required for vscode-server
+
   networking.hostName = "nixos";
   networking.hostId = "3132b0fd"; # head -c 8 /etc/machine-id
 
@@ -112,7 +114,6 @@
   boot.initrd.supportedFilesystems = [ "zfs" ];
   boot.kernelModules = [ "zfs" ];
 
-  # Correct: only list the real pool name(s)
   boot.zfs.extraPools = [ "zraid" ];
 
   services.zfs.autoScrub = {
@@ -137,9 +138,18 @@
   
   networking.firewall = {
     enable = true;
-    checkReversePath = false; #needed for vps
-    allowedTCPPorts = [ 80 443 8080 ];
+    checkReversePath = false; #needed for vpns
+    
+    #port enabling has been moved to the modules that require it, 
+    #so its easier to see/manage which module uses which port.
+  
   };
+  
+  # required so the server doesn't sleep when it is idling in the lock screen
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
 
 
   # This value determines the NixOS release from which the default
