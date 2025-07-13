@@ -1,7 +1,9 @@
- { pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: {
 
-  options = { brave.enable = lib.mkEnableOption "enables brave"; };
- environment.systemPackages = [
-    pkgs.protonvpn-gui
-  ];
-  }
+  options = { proton.enable = lib.mkEnableOption "enables proton"; };
+
+  config = lib.mkIf config.proton.enable {
+    environment.systemPackages = with pkgs; [ protonvpn-gui ];
+  };
+}
+  

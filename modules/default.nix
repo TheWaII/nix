@@ -4,11 +4,12 @@
     #programs
     ./programs/brave.nix
     #./programs/discord.nix
+    ./programs/proton-vpn.nix
     #./programs/spotify.nix
     #./programs/signal-desktop.nix
     #./programs/steam.nix
     ./programs/vscode.nix
-    #./programs/qbittorrent.nix
+    ./programs/qbittorrent.nix
 
     #services
     ./services/arr/bazarr.nix
@@ -45,5 +46,7 @@
   #the rest
   jellyfin.enable = lib.mkDefault true;
   nginx.enable = lib.mkDefault true;
+  proton.enable = lib.mkDefault true;
+  qbittorrent.enable = lib.mkDefault true;
   
 }

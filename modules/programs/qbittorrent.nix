@@ -4,5 +4,5 @@
 
   config = lib.mkIf config.qbittorrent.enable {
     environment.systemPackages = with pkgs; [ qbittorrent ];
-  };
-}
+    };
+  }

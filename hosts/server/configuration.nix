@@ -137,8 +137,10 @@
   
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 ];
+    checkReversePath = false; #needed for vps
+    allowedTCPPorts = [ 80 443 8080 ];
   };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
