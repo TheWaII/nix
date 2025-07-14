@@ -42,7 +42,7 @@
   bazarr.enable = lib.mkDefault true;
   # prowlarr.enable = lib.mkDefault true;
   radarr.enable = lib.mkDefault true;
-  # sonarr.enable = lib.mkDefault true;
+  sonarr.enable = lib.mkDefault true;
 
   #the rest
   jellyfin.enable = lib.mkDefault true;
