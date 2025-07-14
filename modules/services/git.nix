@@ -19,14 +19,13 @@
   config = lib.mkIf config.git.enable {
     environment.systemPackages = with pkgs; [ git ];
 
-    environment.etc = lib.mkIf (
-      config.git.username != "" && config.git.email != ""
-    ) {
-      "gitconfig".text = ''
-        [user]
-            name = ${config.git.username}
-            email = ${config.git.email}
-      '';
-    };
+    environment.etc =
+      lib.mkIf (config.git.username != "" && config.git.email != "") {
+        "gitconfig".text = ''
+          [user]
+              name = ${config.git.username}
+              email = ${config.git.email}
+        '';
+      };
   };
 }

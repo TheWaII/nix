@@ -7,7 +7,7 @@
     let lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
-        servewall = lib.nixosSystem {
+        nixos = lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./hosts/server/configuration.nix ];
         };

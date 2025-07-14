@@ -1,4 +1,4 @@
-# OLD CONFIGURATION 
+# OLD CONFIGURATION
 # Now running on RAID 10. 
 # Too lazy to change lul (will do when the time comes)
 {
@@ -11,7 +11,10 @@
           type = "gpt";
           partitions.zfs = {
             size = "100%";
-            content = { type = "zfs"; pool = "zstorage"; };
+            content = {
+              type = "zfs";
+              pool = "zstorage";
+            };
           };
         };
       };
@@ -22,7 +25,10 @@
           type = "gpt";
           partitions.zfs = {
             size = "100%";
-            content = { type = "zfs"; pool = "zstorage"; };
+            content = {
+              type = "zfs";
+              pool = "zstorage";
+            };
           };
         };
       };
@@ -33,7 +39,10 @@
           type = "gpt";
           partitions.zfs = {
             size = "100%";
-            content = { type = "zfs"; pool = "zmedia"; };
+            content = {
+              type = "zfs";
+              pool = "zmedia";
+            };
           };
         };
       };
@@ -44,7 +53,10 @@
           type = "gpt";
           partitions.zfs = {
             size = "100%";
-            content = { type = "zfs"; pool = "zmedia"; };
+            content = {
+              type = "zfs";
+              pool = "zmedia";
+            };
           };
         };
       };
@@ -53,20 +65,16 @@
     zpool = {
       zstorage = {
         type = "zpool";
-        mode = "mirror"; 
+        mode = "mirror";
         mountpoint = "/storage";
-        rootFsOptions = {
-          compression = "zstd";
-        };
+        rootFsOptions = { compression = "zstd"; };
       };
 
       zmedia = {
         type = "zpool";
         mode = ""; # stripped
         mountpoint = "/media";
-        rootFsOptions = {
-          compression = "zstd";
-        };
+        rootFsOptions = { compression = "zstd"; };
       };
     };
   };

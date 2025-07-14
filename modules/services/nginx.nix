@@ -1,8 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options = {
-    nginx.enable = lib.mkEnableOption "enables nginx";
-  };
+  options = { nginx.enable = lib.mkEnableOption "enables nginx"; };
 
   config = lib.mkIf config.nginx.enable {
     services.nginx = {
@@ -57,6 +55,6 @@
       acceptTerms = true;
       defaults.email = "23299221+TheWaII@users.noreply.github.com";
     };
-    networking.firewall.allowedTCPPorts = [80 443];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
 }

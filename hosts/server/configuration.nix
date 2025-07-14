@@ -5,17 +5,16 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/default.nix 
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/default.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  programs.nix-ld.enable = true; #required for vscode-server
+  programs.nix-ld.enable = true; # required for vscode-server
 
   networking.hostName = "nixos";
   networking.hostId = "3132b0fd"; # head -c 8 /etc/machine-id
@@ -75,22 +74,22 @@
     #media-session.enable = true;
   };
 
+  # group for media related services (jellyfin, radarr, etc.)
+  users.groups.media = { };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.servewall = {
     isNormalUser = true;
     description = "servewall";
-    extraGroups = [ "networkmanager" "wheel" "render" "video" ];
+    extraGroups = [ "networkmanager" "wheel" ];
   };
-
 
   #services
   git = {
     enable = true;
     username = "thewall";
-    email = "23299221+TheWaII@users.noreply.github.com"; 
+    email = "23299221+TheWaII@users.noreply.github.com";
   };
-
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -123,34 +122,46 @@
   #END ZFS
 
   #GPU Drivers
-  systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD"; # Or "i965" if using older driver
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };      # Same here
-  
+  systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
-      intel-media-driver      # ESSENTIAL: Primary VAAPI driver for Arc (iHD)
-      intel-compute-runtime   # ESSENTIAL: OpenCL runtime, likely needed for HDR tone mapping
-      libva                   # ESSENTIAL: Core VAAPI library
-      vpl-gpu-rt              # RECOMMENDED: Modern Intel Video Processing Library
+      intel-media-driver
+      intel-compute-runtime
+      libva
+      vpl-gpu-rt
     ];
   };
-  
+
   networking.firewall = {
     enable = true;
-    checkReversePath = false; #needed for vpns
-    
+    checkReversePath = false; # needed for vpns
     #port enabling has been moved to the modules that require it, 
     #so its easier to see/manage which module uses which port.
-  
   };
-  
-  # required so the server doesn't sleep when it is idling in the lock screen
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
 
+  # required so the server doesn't sleep when it is idling in the lock screen
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
+  };
+
+  environment.shellAliases = {
+    nrsflake = "sudo nixos-rebuild switch --flake .";
+    ncgarbage = "nix-collect-garbage";
+    ncgarbaged = "nix-colect-garbage -d";
+  };
+
+  #garbage collect settings
+  nix.gc = {
+    automatic = true;
+    dates = "00:00";
+    options = "--delete-older-than-30d";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
