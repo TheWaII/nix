@@ -24,6 +24,7 @@
     #./services/paperless-ngx.nix
     ./services/openssh.nix
     #./services/uptime-kuma.nix
+    ./services/wireguard.nix
 
   ];
 
@@ -40,7 +41,7 @@
 
   #arr
   bazarr.enable = lib.mkDefault true;
-  # prowlarr.enable = lib.mkDefault true;
+  prowlarr.enable = lib.mkDefault true;
   radarr.enable = lib.mkDefault true;
   sonarr.enable = lib.mkDefault true;
 
@@ -49,6 +50,6 @@
   nginx.enable = lib.mkDefault true;
   openssh.enable = lib.mkDefault true;
   proton.enable = lib.mkDefault true;
-  qbittorrent.enable = lib.mkDefault true;
+  wireguard.enable = lib.mkDefault true;
 
 }

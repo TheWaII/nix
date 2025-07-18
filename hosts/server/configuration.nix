@@ -2,6 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
+# THIS when i cant login... 
+# sudo rm -rf /tmp/.ICE-unix /tmp/.X11-unix
+# sudo reboot
 { config, pkgs, ... }:
 
 {
@@ -150,10 +153,21 @@
     hybrid-sleep.enable = false;
   };
 
+  services.qbittorrent = {
+    enable = true;
+    openFirewall = true;
+    port = 8080;
+  };
+
+  users.users.qbittorrent = { 
+    group = "qbittorrent";
+   extraGroups = ["media"];
+  };
+
   environment.shellAliases = {
     nrsflake = "sudo nixos-rebuild switch --flake .";
-    ncgarbage = "nix-collect-garbage";
-    ncgarbaged = "nix-colect-garbage -d";
+    ncgarbage = "sudo nix-collect-garbage";
+    ncgarbaged = "sudo nix-collect-garbage -d";
   };
 
   #garbage collect settings
